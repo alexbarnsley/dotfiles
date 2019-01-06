@@ -9,28 +9,37 @@
 [color]
         ui = True
 [alias]
+        r = reset
         ri = rebase --interactive --autosquash
         st = status
-        sts = status -s
+        sts = stash
+        stsp = stash -p
         ci = commit
-        co = checkout
+        co = "!sh -c 'git fetch --all && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" == \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
+        cob = checkout -b
+        cop = !sh -c 'git checkout $1 && git pull'
+        cod = !sh -c 'git checkout develop && git pull'
+        com = !sh -c 'git checkout master && git pull'
         ls = ls-files
         df = diff
         c = commit
+        cm = commit -m
+        bl = branch -v
         ap = add -p
+        ps = push
+        pl = pull
         aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero -'
         pr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
-	masterjs = !sh -c 'git stash && git co master && npm install && npm start' -
-	prjs = !sh -c 'git pr $1 && npm install' -
-	prjsstart = !sh -c 'git pr $1 && npm install && npm start' -
-	masterionic = !sh -c 'git stash && git co master && git pull && npm install && git ionic-run-android-live' -
-	#masterionic-autoip = !sh -c 'git stash && git co master && git pull && npm install && git ionic-run-android-live-autoip' -
-	prionic = !sh -c 'git pr $1 && npm install && git ionic-run-android' -
-	prionic-live = !sh -c 'git pr $1 && npm install && git ionic-run-android-live' -
-        ionic-run-android = !sh -c 'yarn install && ionic cordova run android --minifycss --optimizejs --aot' -
-        ionic-run-android-live = !sh -c 'yarn install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
-        #ip = !sh -c 'IP=`ifconfig en0 | fgrep \"inet \" | egrep -o \"([0-9]+\.){3}[0-9]+\" | egrep -v \"255\$\"` && echo $IP' -
-        #ionic-run-android-live-autoip = !sh -c 'IP=`ifconfig en0 | fgrep "inet " | awk '{print $2}'` && yarn install && ionic cordova run android --minifycss --optimizejs --aot --livereload --address=$IP' -
+        masterjs = !sh -c 'git stash && git co master && npm install' -
+        masterjsstart = !sh -c 'git stash && git co master && npm install && npm start' -
+        prjs = !sh -c 'git pr $1 && npm install' -
+        prjsstart = !sh -c 'git pr $1 && npm install && npm start' -
+        masterionic = !sh -c 'git stash && git co master && git pull && npm install && git ionic-run-android-live' -
+        prionic = !sh -c 'git pr $1 && npm install && git ionic-run-android' -
+        prionic-live = !sh -c 'git pr $1 && npm install && git ionic-run-android-live' -
+        ionic-run-android = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot' -
+        ionic-run-android-live = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
+        lb = !sh -c 'lerna bootstrap'
 
         diff-stash = stash show -p stash@{0}
         diff-staged = diff --cached
@@ -39,4 +48,5 @@
         commit-empty = commit --allow-empty
         ec = config --global --edit
 
+        refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
         nuke = reset --hard HEAD
