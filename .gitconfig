@@ -27,6 +27,7 @@
         bl = branch -v
         ap = add -p
         ps = push
+        fa = fetch --all
         pl = pull
         aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero -'
         pr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
@@ -46,6 +47,8 @@
         diff-prev = diff HEAD^
         pull-theirs = !git fetch && git reset --hard HEAD
         commit-empty = commit --allow-empty
+        initial-commit = commit -m 'chore: initial commit (empty)' --allow-empty
+        init = !sh -c 'git init && git initial-commit' -
         ec = config --global --edit
 
         refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
