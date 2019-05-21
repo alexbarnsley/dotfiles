@@ -1,0 +1,28 @@
+#!/bin/bash
+
+cd ~
+if [ -f ".gitconfig" ]; then
+    echo ".gitconfig already exists"
+    exit 1
+fi
+
+git clone git@github.com:alexbarnsley/dotfiles.git
+mv dotfiles/.git* .
+rm -rf dotfiles
+
+ALIASES_FILE=""
+if [ -f ".bash_aliases" ]; then
+    ALIASES_FILE=".bash_aliases"
+elif [ -f ".bashrc" ]; then
+    ALIASES_FILE=".bashrc"
+elif [ -f ".profile" ]; then
+    ALIASES_FILE=".profile"
+else
+    echo "No file for aliases"
+    exit 1
+fi
+
+ALIAS_EXISTS=$(egrep "^alias g=\"git\"$" "$ALIASES_FILE")
+if [ -z "$ALIAS_EXISTS" ]; then
+    echo 'alias g="git"' >> "$ALIASES_FILE"
+fi
