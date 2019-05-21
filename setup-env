@@ -47,6 +47,8 @@ if [ "$OS" == "Linux" ]; then
 		sudo apt-get update && sudo apt-get install -y yarn
 	fi
 
+	sudo su "$USER"
+
 	## Add global yarn package
 	yarn global add n
 fi
