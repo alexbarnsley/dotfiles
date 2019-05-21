@@ -1,11 +1,14 @@
 #!/bin/bash
 
+OS=$(uname -s)
+
 cd ~
 if [ -f ".gitconfig" ]; then
     echo ".gitconfig already exists"
     exit 1
 fi
 
+## Git Config
 git clone git@github.com:alexbarnsley/dotfiles.git
 mv dotfiles/.git* .
 rm -rf dotfiles
@@ -25,4 +28,25 @@ fi
 ALIAS_EXISTS=$(egrep "^alias g=\"git\"$" "$ALIASES_FILE")
 if [ -z "$ALIAS_EXISTS" ]; then
     echo 'alias g="git"' >> "$ALIASES_FILE"
+fi
+
+## Node Installation
+if [ "$OS" == "Linux" ]; then
+	## Install NodeJS & NPM
+	NODE_VERSION=$((node -v | egrep -o "[0-9]+" | head -1) &>/dev/null || echo 0)
+	if [ "$NODE_VERSION" < 11 ]; then
+		curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+		sudo apt-get update && sudo apt-get install -y nodejs
+	fi
+
+	## Install Yarn
+	YARN_VERSION=$(yarn -v &>/dev/null)
+	if [ -z "$YARN_VERSION" ]; then
+		curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+		echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+		sudo apt-get update && sudo apt-get install -y yarn
+	fi
+
+	## Add global yarn package
+	yarn global add n
 fi
