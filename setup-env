@@ -2,13 +2,13 @@
 
 OS=$(uname -s)
 
-sudo apt-get update && sudo apt-get install -y git
-
 cd "$HOME"
 if [ -f ".gitconfig" ]; then
     echo ".gitconfig already exists"
     exit 1
 fi
+
+sudo apt-get update && sudo apt-get install -y git
 
 ## Git Config
 git clone https://github.com/alexbarnsley/dotfiles.git
