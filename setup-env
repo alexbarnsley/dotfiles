@@ -36,6 +36,14 @@ fi
 ## Node Installation
 if [ "$OS" == "Linux" ]; then
 	LINUX_FLAVOUR=$(cat /etc/os-release | egrep "^ID_LIKE=" | egrep -o "\w+$")
+	if [ -z "$LINUX_FLAVOUR" ]; then
+		LINUX_FLAVOUR=$(cat /etc/os-release | egrep "^ID=" | egrep -o "\w+$")
+	fi
+	if [ -z "$LINUX_FLAVOUR" ]; then
+		echo "Could not determine Linux flavour"
+		exit 1
+	fi
+	
 	if [ "$LINUX_FLAVOUR" == "debian" ]; then
 		## Install NodeJS & NPM
 		NODE_VERSION=$((node -v | egrep -o "[0-9]+" | head -1) 2>/dev/null || echo 0)
