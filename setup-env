@@ -2,7 +2,7 @@
 
 OS=$(uname -s)
 
-cd ~
+cd "$HOME"
 if [ -f ".gitconfig" ]; then
     echo ".gitconfig already exists"
     exit 1
