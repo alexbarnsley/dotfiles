@@ -12,7 +12,7 @@ fi
 git clone https://github.com/alexbarnsley/dotfiles.git
 mv dotfiles/.git* .
 rm -rf dotfiles
-git remote origin set-url git@github.com:alexbarnsley/dotfiles.git
+git remote set-url origin git@github.com:alexbarnsley/dotfiles.git
 
 ALIASES_FILE=""
 if [ -f ".bash_aliases" ]; then
