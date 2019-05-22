@@ -32,22 +32,27 @@ fi
 
 ## Node Installation
 if [ "$OS" == "Linux" ]; then
-	## Install NodeJS & NPM
-	NODE_VERSION=$((node -v | egrep -o "[0-9]+" | head -1) 2>/dev/null || echo 0)
-	if [ "$NODE_VERSION" -lt "11" ]; then
-		curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
-		sudo apt-get update && sudo apt-get install -y nodejs
-	fi
+	LINUX_FLAVOUR=$(cat /etc/os-release | egrep "^ID_LIKE=" | egrep -o "\w+$")
+	if [ "$LINUX_FLAVOUR" == "debian" ]; then
+		## Install NodeJS & NPM
+		NODE_VERSION=$((node -v | egrep -o "[0-9]+" | head -1) 2>/dev/null || echo 0)
+		if [ "$NODE_VERSION" -lt "11" ]; then
+			curl -sL https://deb.nodesource.com/setup_11.x | sudo bash -
+			sudo apt-get update && sudo apt-get install -y nodejs
+		fi
 
-	## Install Yarn
-	YARN_VERSION=$(yarn -v 2>/dev/null)
-	if [ -z "$YARN_VERSION" ]; then
-		curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-		echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-		sudo apt-get update && sudo apt-get install -y yarn
-	fi
+		## Install Yarn
+		YARN_VERSION=$(yarn -v 2>/dev/null)
+		if [ -z "$YARN_VERSION" ]; then
+			curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+			echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+			sudo apt-get update && sudo apt-get install -y yarn
+		fi
 
-	sudo su "$USER"
+		sudo su "$USER"
+	elif [ "$LINUX_FLAVOUR" == "arch" ]; then
+		sudo pacman -Syu nodejs npm yarn
+	fi
 
 	## Add global yarn package
 	yarn global add n
