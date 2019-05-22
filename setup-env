@@ -9,9 +9,10 @@ if [ -f ".gitconfig" ]; then
 fi
 
 ## Git Config
-git clone git@github.com:alexbarnsley/dotfiles.git
+git clone https://github.com/alexbarnsley/dotfiles.git
 mv dotfiles/.git* .
 rm -rf dotfiles
+git remote origin set-url git@github.com:alexbarnsley/dotfiles.git
 
 ALIASES_FILE=""
 if [ -f ".bash_aliases" ]; then
