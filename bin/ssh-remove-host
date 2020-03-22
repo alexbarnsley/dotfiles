@@ -1,0 +1,8 @@
+LINE="$1"
+if [ -z "$LINE" ]; then
+	echo 'Missing line number: `ssh-remove-host 1`'
+	exit 1
+fi
+
+OUTPUT=$(sed "${LINE}d" ~/.ssh/known_hosts)
+echo "$OUTPUT" > ~/.ssh/known_hosts

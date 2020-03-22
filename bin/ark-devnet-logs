@@ -1,0 +1,1 @@
+ssh root@95.217.8.214 "su ark -c '/usr/local/bin/pm2 logs'"

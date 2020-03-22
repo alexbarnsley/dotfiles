@@ -1,0 +1,10 @@
+#!/bin/bash
+if [[ -z "$1" ]]; then
+	echo 'Missing IP. Run `E.g. adb-wireless 1.2.3.4`'
+	exit 1
+fi
+adb kill-server
+adb devices
+adb tcpip 5555 || true
+echo "adb connect $1"
+adb connect $1

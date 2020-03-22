@@ -1,0 +1,25 @@
+builtin cd "$@"
+
+if [ -d ".git" ]; then
+	REMOTE_BRANCH=$(git status | egrep -o "origin/[a-zA-Z0-9/-_]+")
+	git fetch --all
+	git status
+	BEHIND=$(git log HEAD..origin/master | egrep "^Author" -c)
+	if [ "$BEHIND" -gt "0" ]; then
+		echo "Git branch is behind by "$BEHIND" commits"
+	fi
+fi
+
+#if [ "$BEHIND" > "0" ]; then
+#	while [ "$PULL" != "Y" ]; do
+#		read -n1 -p "Git branch is behind by "$BEHIND" commits. Pull? [Y/n]" PULL
+#		if [ -z "$PULL" ]; then
+#			PULL="Y"
+#		fi
+#	done
+#
+#	case $PULL in  
+#		y|Y) git pull ;;
+#		n|N) exit ;; 
+#	esac
+#fi

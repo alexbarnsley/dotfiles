@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+  echo "Empty organisation"
+  exit 1
+fi
+if [[ -z "$2" ]]; then
+  echo "Empty repository"
+  exit 1
+fi
+
+DESTINATION="$2"
+if [[ ! -z "$3" ]]; then
+  DESTINATION="$3"
+fi
+
+git clone "git@github.com:$1/$2.git" "$DESTINATION"
