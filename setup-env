@@ -14,7 +14,7 @@ fi
 
 ## Git Config
 git clone https://github.com/alexbarnsley/dotfiles.git
-find dotfiles -name ".*" -exec mv {} . \;
+find "$HOME/dotfiles" -name ".*" -not -name ".zshrc" -exec mv {} "$HOME" \;
 git remote set-url origin git@github.com:alexbarnsley/dotfiles.git
 
 ALIASES_FILE=""
@@ -41,13 +41,19 @@ if [ -z "$ALIAS_EXISTS" ]; then
 fi
 
 if [ "$OS" == "Darwin" ]; then
-	xcode-select install
+	xcode-select --install
 
 	## Install Homebrew
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	brew -v &>/dev/null || INSTALL_BREW="Y"
+	if [ "$INSTALL_BREW" == "Y" ]; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+	fi
 
 	## Install wget
-	brew install wget
+	wget --version &>/dev/null || INSTALL_WGET="Y"
+	if [ "$INSTALL_WGET" == "Y" ]; then
+		brew install wget
+	fi
 
 	## Install Powerline Fonts
 	git clone https://github.com/powerline/fonts.git --depth=1 "$HOME/powerline-fonts"
@@ -58,6 +64,11 @@ if [ "$OS" == "Darwin" ]; then
 
 	## Oh My Zsh
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+	mv "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
+
+	## Oh My Zsh theme
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 fi
 
 ## Node Installation
