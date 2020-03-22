@@ -8,12 +8,13 @@ if [ -f ".gitconfig" ]; then
     exit 1
 fi
 
-sudo apt-get update && sudo apt-get install -y git
+if [ "$OS" == "Linux" ]; then
+    sudo apt-get update && sudo apt-get install -y git
+fi
 
 ## Git Config
 git clone https://github.com/alexbarnsley/dotfiles.git
-mv dotfiles/.git* .
-rm -rf dotfiles
+mv dotfiles/.* .
 git remote set-url origin git@github.com:alexbarnsley/dotfiles.git
 
 ALIASES_FILE=""
@@ -24,13 +25,19 @@ elif [ -f ".bashrc" ]; then
 elif [ -f ".profile" ]; then
     ALIASES_FILE=".profile"
 else
-    echo "No file for aliases"
-    exit 1
+    if [ "$OS" == "Linux" ]; then
+        echo "No file for aliases"
+        exit 1
+    else
+        touch .bash_aliases
+        ALIASES_FILE=".bash_aliases"
+    fi
 fi
 
-ALIAS_EXISTS=$(egrep "^alias g=\"git\"$" "$ALIASES_FILE")
+ALIAS_EXISTS=$(egrep "^## Pre-loaded Aliases ##$" "$ALIASES_FILE")
 if [ -z "$ALIAS_EXISTS" ]; then
-    echo 'alias g="git"' >> "$ALIASES_FILE"
+    echo '## Pre-loaded Aliases ##' >> "$ALIASES_FILE"
+    cat dotfiles/bash_aliases >> "$ALIASES_FILE"
 fi
 
 ## Node Installation
@@ -73,3 +80,5 @@ fi
 if [ ! -d "$HOME/.ssh" ]; then
 	mkdir "$HOME/.ssh" && chmod 600 "$HOME/.ssh"
 fi
+
+rm -rf dotfiles
