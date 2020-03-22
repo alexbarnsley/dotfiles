@@ -3,5 +3,6 @@
 !bin/
 !.gitconfig
 !.vimrc
+!.zshrc
 !bash_aliases
 !setup-env
