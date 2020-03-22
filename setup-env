@@ -14,7 +14,7 @@ fi
 
 ## Git Config
 git clone https://github.com/alexbarnsley/dotfiles.git
-mv dotfiles/.* .
+find dotfiles -name ".*" -exec mv {} . \;
 git remote set-url origin git@github.com:alexbarnsley/dotfiles.git
 
 ALIASES_FILE=""
