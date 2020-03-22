@@ -42,6 +42,22 @@ fi
 
 if [ "$OS" == "Darwin" ]; then
 	xcode-select install
+
+	## Install Homebrew
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+	## Install wget
+	brew install wget
+
+	## Install Powerline Fonts
+	git clone https://github.com/powerline/fonts.git --depth=1 "$HOME/powerline-fonts"
+	cd "$HOME/powerline-fonts"
+	./install.sh
+	cd "$HOME"
+	rm -rf "$HOME/powerline-fonts"
+
+	## Oh My Zsh
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 ## Node Installation
@@ -78,18 +94,6 @@ if [ "$OS" == "Linux" ]; then
 
 	## Add global yarn package
 	yarn global add n
-fi
-
-wget --version &>/dev/null || INSTALL_WGET="Y"
-if [ "$INSTALL_WGET" == "Y" ]; then
-	cd "$HOME"
-	curl -O https://ftp.gnu.org/gnu/wget/wget-1.19.5.tar.gz
-	tar -zxvf wget-1.19.5.tar.gz
-	cd wget-1.19.5/
-	./configure
-	make
-	make install
-	rm -Rf "$HOME/{wget-1.19.5,wget-1.19.5.tar.gz}"
 fi
 
 ## Make ssh folder
