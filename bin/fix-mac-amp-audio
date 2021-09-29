@@ -1,0 +1,15 @@
+CURRENT_DEVICE=$(SwitchAudioSource -c)
+
+echo $CURRENT_DEVICE
+
+if [ "$CURRENT_DEVICE" != "Sound BlasterX G6" ]; then
+	exit;
+fi
+
+SwitchAudioSource -t output -s "Built-in Digital Output"
+
+sleep 1
+
+SwitchAudioSource -t output -s "Sound BlasterX G6"
+
+ps -ef | fgrep Terminal.app | awk '{ print $2 }' | xargs kill

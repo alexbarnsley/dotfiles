@@ -1,3 +1,8 @@
+if [ ! -d "$@" ] && [ ! -d "$PWD/$@" ]; then
+	echo "\"$@\" is not a valid path"
+	return
+fi
+
 builtin cd "$@"
 
 if [ -d ".git" ]; then
