@@ -5,37 +5,52 @@
         autocrlf = false
         editor = vim
 [push]
-        default = upstream
+        default = current
 [color]
         ui = True
 [alias]
         r = reset
+	reset-last = reset HEAD~1
         ri = rebase --interactive --autosquash
         st = status
         sts = stash
         stsp = stash -p
         ci = commit
         co = "!sh -c 'git fetch --all && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" == \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
+	cou = "!sh -c 'git co $1 && composer install --ignore-platform-reqs && yarn'" -
         cob = checkout -b
         cop = !sh -c 'git checkout $1 && git pull'
-        cod = !sh -c 'git checkout develop && git pull'
+        cod = !sh -c 'git checkout develop && git pull && composer install --ignore-platform-reqs && yarn'
+        codn = !sh -c 'git checkout develop && git pull && composer install && yarn'
         com = !sh -c 'git checkout master && git pull'
         cos = !sh -c 'git checkout staging && git pull'
+        cot = !sh -c 'git checkout 3.0-react && git pull'
         cor = !sh -c 'git co $1 && yarn && yarn dev' -
+	ca = c --amend
         ls = ls-files
         df = diff
         c = commit
+        # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi'"
+        # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi;' && sh -c 'git commit $@'"
         cnv = commit --no-verify
-        cm = commit -m
+        cm = c -m
+        cw = c -m "wip"
+	cp = cm 'chore: update public'
+	cpp = !sh -c 'git cp && git p' -
+	cui = cm 'chore: update ui dep'
+        cbn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\" && git psu'"
         cmnv = commit --no-verify -m
         bl = branch -v
+        bd = branch -D
         ap = add -p
         ps = push
+        psu = !sh -c 'git push -u && git prc'
+        prc = !sh -c 'gh pr create --web'
         fa = fetch --all
         pl = pull
         aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
-        pr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
-        prr = !sh -c 'git pr $1 && yarn && yarn dev' -
+        copr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
+        coprr = !sh -c 'git pr $1 && yarn && yarn dev' -
         masterjs = !sh -c 'git stash && git co master && npm install' -
         masterjsstart = !sh -c 'git stash && git co master && npm install && npm start' -
         prjs = !sh -c 'git pr $1 && npm install' -
@@ -46,8 +61,14 @@
         ionic-run-android = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot' -
         ionic-run-android-live = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
         lb = !sh -c 'lerna bootstrap'
+	cup = !sh -c 'rm -rf vendor && composer install --ignore-platform-reqs && yarn && yarn prod'
+
+	dwc = !sh -c 'yarn test:coverage && yarn build:ci'
 
         diff-stash = stash show -p stash@{0}
+        diff-stash1 = stash show -p stash@{1}
+        diff-stash2 = stash show -p stash@{2}
+        diff-stash3 = stash show -p stash@{3}
         diff-staged = diff --cached
         diff-prev = diff HEAD^
         pull-theirs = !git fetch && git reset --hard HEAD
@@ -56,5 +77,7 @@
         init = !sh -c 'git init && git initial-commit' -
         ec = config --global --edit
 
+	m = !sh -c 'git co $1 && git pl && git co $2 && git merge $1' -
+	md = m develop -
         refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
         nuke = reset --hard HEAD
