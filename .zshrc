@@ -10,8 +10,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
 #ZSH_THEME="agnoster"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-POWERLEVEL9K_MODE="awesome-patched"
+#ZSH_THEME="powerlevel10k/powerlevel10k"
+#POWERLEVEL9K_MODE="awesome-patched"
+ZSH_THEME="spaceship"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -92,6 +93,35 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+#JAVA_HOME=('/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/')
+#export JAVA_HOME
+
+GOPATH=('/Users/alexbarnsley/projects/go')
+export GOPATH
+GOROOT=('/usr/local/opt/go@1.13/libexec')
+export GOROOT
+
+ANDROID_HOME=('/Users/alexbarnsley/Library/Android/sdk')
+export ANDROID_HOME
+ANDROID_SDK_ROOT=('/Users/alexbarnsley/Library/Android/sdk')
+export ANDROID_SDK_ROOT
+ANDROID_AVD_HOME=('/Users/alexbarnsley/.android/avd')
+export ANDROID_AVD_HOME
+JAVA_HOME=('/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home')
+export JAVA_HOME
+
+path+=($JAVA_HOME)
+path+=('/Users/alexbarnsley/Library/Android/sdk/platform-tools')
+path+=('/Users/alexbarnsley/Library/Android/sdk/tools')
+path+=('/Users/alexbarnsley/Library/Android/sdk/tools/bin')
+path+=($GOPATH)
+path+=($GOROOT)
+path=('/Users/alexbarnsley/.composer/vendor/bin' $path)
+path=('/Users/alexbarnsley/bin' $path)
+path=($path '/Users/alexbarnsley/bin')
+path=("$JAVA_HOME/bin" $path)
+export PATH
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -101,5 +131,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+source ~/.bash_aliases
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+#if [ "$PWD" = "/Users/alexbarnsley" ]; then
+#	gp
+#fi
