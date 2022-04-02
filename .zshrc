@@ -96,29 +96,29 @@ source $ZSH/oh-my-zsh.sh
 #JAVA_HOME=('/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/')
 #export JAVA_HOME
 
-GOPATH=('/Users/alexbarnsley/projects/go')
+GOPATH=("$HOME/projects/go")
 export GOPATH
 GOROOT=('/usr/local/opt/go@1.13/libexec')
 export GOROOT
 
-ANDROID_HOME=('/Users/alexbarnsley/Library/Android/sdk')
+ANDROID_HOME=("$HOME/Library/Android/sdk")
 export ANDROID_HOME
-ANDROID_SDK_ROOT=('/Users/alexbarnsley/Library/Android/sdk')
+ANDROID_SDK_ROOT=("$HOME/Library/Android/sdk")
 export ANDROID_SDK_ROOT
-ANDROID_AVD_HOME=('/Users/alexbarnsley/.android/avd')
+ANDROID_AVD_HOME=("$HOME/.android/avd")
 export ANDROID_AVD_HOME
 JAVA_HOME=('/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home')
 export JAVA_HOME
 
 path+=($JAVA_HOME)
-path+=('/Users/alexbarnsley/Library/Android/sdk/platform-tools')
-path+=('/Users/alexbarnsley/Library/Android/sdk/tools')
-path+=('/Users/alexbarnsley/Library/Android/sdk/tools/bin')
+path+=("$HOME/Library/Android/sdk/platform-tools")
+path+=("$HOME/Library/Android/sdk/tools")
+path+=("$HOME/Library/Android/sdk/tools/bin")
 path+=($GOPATH)
 path+=($GOROOT)
-path=('/Users/alexbarnsley/.composer/vendor/bin' $path)
-path=('/Users/alexbarnsley/bin' $path)
-path=($path '/Users/alexbarnsley/bin')
+path=("$HOME/.composer/vendor/bin" $path)
+path=("$HOME/bin" $path)
+path=($path "$HOME/bin")
 path=("$JAVA_HOME/bin" $path)
 export PATH
 
