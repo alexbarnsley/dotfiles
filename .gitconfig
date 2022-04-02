@@ -6,6 +6,8 @@
         editor = vim
 [push]
         default = current
+[pull]
+        rebase = false
 [color]
         ui = True
 [alias]
@@ -16,13 +18,13 @@
         sts = stash
         stsp = stash -p
         ci = commit
-        co = "!sh -c 'git fetch --all && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" == \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
+        co = "!sh -c 'git fetch --all >/dev/null && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" -eq \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
 	cou = "!sh -c 'git co $1 && composer install --ignore-platform-reqs && yarn'" -
         cob = checkout -b
         cop = !sh -c 'git checkout $1 && git pull'
-        cod = !sh -c 'git checkout develop && git pull && composer install --ignore-platform-reqs && yarn'
+        cod = "!sh -c 'git fetch --all >/dev/null && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git checkout develop && git pull; else git com; fi; composer install --ignore-platform-reqs && yarn'" -
         codn = !sh -c 'git checkout develop && git pull && composer install && yarn'
-        com = !sh -c 'git checkout master && git pull'
+        com = "!sh -c 'git fetch --all >/dev/null && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git checkout master; else git checkout main; fi; git pull'" -
         cos = !sh -c 'git checkout staging && git pull'
         cot = !sh -c 'git checkout 3.0-react && git pull'
         cor = !sh -c 'git co $1 && yarn && yarn dev' -
@@ -35,10 +37,13 @@
         cnv = commit --no-verify
         cm = c -m
         cw = c -m "wip"
+        cwp = !sh -c 'git cw && git ps' -
 	cp = cm 'chore: update public'
-	cpp = !sh -c 'git cp && git p' -
-	cui = cm 'chore: update ui dep'
-        cbn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\" && git psu'"
+	cpp = !sh -c 'git cp && git ps' -
+	cui = cm 'chore: update foundation dependency'
+        cf = cm 'chore: update foundation dependency'
+        cbn = "!sh -c 'git cbnn && git psu'"
+        cbnn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\"'"
         cmnv = commit --no-verify -m
         bl = branch -v
         bd = branch -D
@@ -62,6 +67,8 @@
         ionic-run-android-live = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
         lb = !sh -c 'lerna bootstrap'
 	cup = !sh -c 'rm -rf vendor && composer install --ignore-platform-reqs && yarn && yarn prod'
+        tg = !sh -c 'git tag $1 && git push origin $1' -
+        tgps = !sh -c 'git tg $1 && git ps' -
 
 	dwc = !sh -c 'yarn test:coverage && yarn build:ci'
 
@@ -75,9 +82,13 @@
         commit-empty = commit --allow-empty
         initial-commit = commit -m 'chore: initial commit (empty)' --allow-empty
         init = !sh -c 'git init && git initial-commit' -
-        ec = config --global --edit
+        ec = !sh -c 'subl ~/.gitconfig 2>/dev/null || vi ~/.gitconfig' -
 
 	m = !sh -c 'git co $1 && git pl && git co $2 && git merge $1' -
-	md = m develop -
+	# md = !sh -c 'git fa && git merge origin/develop' -
+        mm = "!sh -c 'git fa && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git merge origin/master; else git merge origin/main; fi'" -
+        md = "!sh -c 'git fa && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git merge origin/develop; else git mm; fi'" -
         refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
         nuke = reset --hard HEAD
+[init]
+	defaultBranch = main
