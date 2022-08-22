@@ -15,5 +15,6 @@ if [[ ! -z "$3" ]]; then
 fi
 
 git clone "git@github.com:$1/$2.git" "$DESTINATION"
-
-cd "$DESTINATION"
+if [[ -d "$(pwd)/$DESTINATION" ]]; then
+  cd $DESTINATION
+fi
