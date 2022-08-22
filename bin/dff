@@ -1,0 +1,1 @@
+] && diff --color=never -rw "$1" "$2" | egrep --color=always -e "^" -e "^(diff|Only in)"
