@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+shopt -s expand_aliases
+source ~/.bash_aliases
+
+RUNS=10
+
+if [[ "$1" =~ "^[0-9]+$" ]] ; then
+	RUNS=$1
+
+	shift
+fi
+
+for i in $(seq 1 "$RUNS"); do 
+	echo "Run $i or $RUNS";
+	eval "$(printf ' %q' "$@")";
+done
