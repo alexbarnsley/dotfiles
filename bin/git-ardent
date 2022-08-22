@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCRIPT_PATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+DESTINATION="$1"
+if [[ ! -z "$2" ]]; then
+  DESTINATION="$2"
+fi 
+$SCRIPT_PATH/git-clone "ArdentHQ" "$1" "$DESTINATION"
