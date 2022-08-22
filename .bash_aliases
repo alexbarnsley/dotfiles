@@ -3,6 +3,7 @@
 alias finder-show-hidden="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias finder-hide-hidden="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 alias l="ls -al"
+alias mkd=". ~/bin/mkdir"
 alias s="subl"
 alias sc="subl ."
 alias scc="subl composer.json"

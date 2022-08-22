@@ -1,0 +1,4 @@
+/usr/bin/mkdir "$@"
+if [ -z "$2" ]; then
+	cd "$1";
+fi
