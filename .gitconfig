@@ -43,14 +43,14 @@
 	cui = cm 'chore: update foundation dependency'
         cf = cm 'chore: update foundation dependency'
         cbn = "!sh -c 'git cbnn && git psu'"
-        cbnn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\"'"
+        cbnn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\"'"
         cmnv = commit --no-verify -m
         bl = branch -v
         bd = branch -D
         ap = add -p
         ps = push
         psu = !sh -c 'git push -u && git prc'
-        prc = !sh -c 'gh pr create --web'
+        prc = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && gh pr create --web --title=\"$BRANCH\"'"
         fa = fetch --all
         pl = pull
         aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
