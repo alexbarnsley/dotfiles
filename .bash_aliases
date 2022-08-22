@@ -2,6 +2,7 @@
 # Show/hide hidden files in Finder.
 alias finder-show-hidden="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
 alias finder-hide-hidden="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+alias ai="sudo apt install"
 alias l="ls -al"
 alias mkd=". ~/bin/mkdir"
 alias s="subl"
@@ -14,7 +15,9 @@ alias .....="cd ../../../.."
 #alias gh="cd ~" # Go home
 alias gps="cd ~/projects-sync"
 alias gp="cd ~/projects"
+alias gpn="cd /media/alexbarnsley/nvme/projects"
 alias gpa="cd ~/projects/ark"
+alias gpardent="cd ~/projects/ardent"
 alias gpp="cd ~/projects/payvo"
 alias c="php -d memory_limit=-1 /usr/local/bin/composer"
 alias ci="c install"
