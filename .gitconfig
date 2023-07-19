@@ -1,94 +1,104 @@
 [user]
-        name = Alex Barnsley
-        email = 8069294+alexbarnsley@users.noreply.github.com
+    name = Alex Barnsley
+    email = 8069294+alexbarnsley@users.noreply.github.com
 [core]
-        autocrlf = false
-        editor = vim
+    autocrlf = false
+    editor = vim
 [push]
-        default = current
+    default = current
 [pull]
-        rebase = false
+    rebase = false
 [color]
-        ui = True
+    ui = True
 [alias]
-        r = reset
-	reset-last = reset HEAD~1
-        ri = rebase --interactive --autosquash
-        st = status
-        sts = stash
-        stsp = stash -p
-        ci = commit
-        co = "!sh -c 'git fetch --all >/dev/null && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" -eq \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
-	cou = "!sh -c 'git co $1 && composer install --ignore-platform-reqs && yarn'" -
-        cob = checkout -b
-        cop = !sh -c 'git checkout $1 && git pull'
-        cod = "!sh -c 'git fetch --all >/dev/null && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git checkout develop && git pull; else git com; fi; composer install --ignore-platform-reqs && yarn'" -
-        codn = !sh -c 'git checkout develop && git pull && composer install && yarn'
-        com = "!sh -c 'git fetch --all >/dev/null && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git checkout master; else git checkout main; fi; git pull'" -
-        cos = !sh -c 'git checkout staging && git pull'
-        cot = !sh -c 'git checkout 3.0-react && git pull'
-        cor = !sh -c 'git co $1 && yarn && yarn dev' -
-	ca = c --amend
-        ls = ls-files
-        df = diff
-        c = commit
-        # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi'"
-        # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi;' && sh -c 'git commit $@'"
-        cnv = commit --no-verify
-        cm = c -m
-        cw = c -m "wip"
-        cwp = !sh -c 'git cw && git ps' -
-	cp = cm 'chore: update public'
-	cpp = !sh -c 'git cp && git ps' -
-	cui = cm 'chore: update foundation dependency'
-        cf = cm 'chore: update foundation dependency'
-        cbn = "!sh -c 'git cbnn && git psu'"
-        cbnn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\"'"
-        cmnv = commit --no-verify -m
-        bl = branch -v
-        bd = branch -D
-        ap = add -p
-        ps = push
-        psu = !sh -c 'git push -u && git prc'
-        prc = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && gh pr create --web --title=\"$BRANCH\"'"
-        fa = fetch --all
-        pl = pull
-        aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
-        copr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
-        coprr = !sh -c 'git pr $1 && yarn && yarn dev' -
-        masterjs = !sh -c 'git stash && git co master && npm install' -
-        masterjsstart = !sh -c 'git stash && git co master && npm install && npm start' -
-        prjs = !sh -c 'git pr $1 && npm install' -
-        prjsstart = !sh -c 'git pr $1 && npm install && npm start' -
-        masterionic = !sh -c 'git stash && git co master && git pull && npm install && git ionic-run-android-live' -
-        prionic = !sh -c 'git pr $1 && npm install && git ionic-run-android' -
-        prionic-live = !sh -c 'git pr $1 && npm install && git ionic-run-android-live' -
-        ionic-run-android = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot' -
-        ionic-run-android-live = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
-        lb = !sh -c 'lerna bootstrap'
-	cup = !sh -c 'rm -rf vendor && composer install --ignore-platform-reqs && yarn && yarn prod'
-        tg = !sh -c 'git tag $1 && git push origin $1' -
-        tgps = !sh -c 'git tg $1 && git ps' -
+    r = reset
+    reset-last = reset HEAD~1
+    ri = rebase --interactive --autosquash
+    st = status
+    sts = stash
+    stsp = stash -p
+    ci = commit
+    co = "!sh -c 'git fetch --all >/dev/null && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" -eq \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
+    cou = "!sh -c 'git co $1 && composer install --ignore-platform-reqs && if [ -f package.json ]; then ~/bin/jspm install && if [ -f vite.config.ts ]; then ~/bin/jspm build; fi; fi'" -
+    cob = checkout -b
+    cop = !sh -c 'git checkout $1 && git pull'
+    cod = "!sh -c 'git fetch --all >/dev/null && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git checkout develop && git pull; else git comnp; fi; composer install --ignore-platform-reqs && ~/bin/jspm install'" -
+    codn = !sh -c 'git checkout develop && git pull && composer install && ~/bin/jspm install'
+    com = "!sh -c 'git fetch --all >/dev/null && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git checkout master; else git checkout main; fi; git pull'" -
+    comnp = "!sh -c 'HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git checkout master; else git checkout main; fi; git pull'" -
+    cos = !sh -c 'git checkout staging && git pull'
+    cot = !sh -c 'git checkout 3.0-react && git pull'
+    cor = !sh -c 'git co $1 && ~/bin/jspm install && ~/bin/jspm dev' -
+    ca = c --amend
+    ls = ls-files
+    df = diff
+    c = commit
+    # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi'"
+    # c = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/-/ /g\" | sed \"s-/-: -g\"); if [ \"$BRANCH\" == \"develop\" ]; then echo \"Cannot commit on $BRANCH\"; exit; fi;' && sh -c 'git commit $@'"
+    cnv = commit --no-verify
+    cmq = c -m
+    cm = "!bash -c 'git commit -m \"${*:0}\"'"
+    cmp = "!bash -c 'git commit -m \"${*:0}\" && git push'"
+    cw = c -m "wip"
+    ct = c -m "test"
+    ctp = !sh -c 'git c -m "test" && git ps' -
+    cwp = !sh -c 'git cw && git ps' -
+    cp = cm 'chore: update public'
+    cpp = !sh -c 'git cp && git ps' -
+    cui = cm 'chore: update foundation dependency'
+    cf = cm 'chore: update foundation dependency'
+    cbn = "!sh -c 'git cbnn && git psu'"
+    cbnn = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && git cm \"$BRANCH\"'"
+    cmnv = commit --no-verify -m
+    bl = branch -v
+    bd = branch -D
+    ap = add -p
+    ps = push
+    psu = !sh -c 'git push -u && git prc'
+    prc = "!sh -c 'BRANCH=$(git branch --show-current | sed \"s/--/ \\& /g\" | sed \"s/-/ /g\" | sed \"s-/-: -g\") && gh pr create --web --title=\"$BRANCH\"'"
+    psf = push -f
+    fa = fetch --all
+    pl = pull
+    aw = !sh -c 'git diff -U0 -w --no-color "$@" | git apply --cached --ignore-whitespace --unidiff-zero' -
+    copr = !sh -c 'git stash && git checkout master && git branch -D pr-$1 || true && git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1' -
+    coprr = !sh -c 'git pr $1 && ~/bin/jspm install && ~/bin/jspm dev' -
+    masterjs = !sh -c 'git stash && git co master && npm install' -
+    masterjsstart = !sh -c 'git stash && git co master && npm install && npm start' -
+    prjs = !sh -c 'git pr $1 && npm install' -
+    prjsstart = !sh -c 'git pr $1 && npm install && npm start' -
+    masterionic = !sh -c 'git stash && git co master && git pull && npm install && git ionic-run-android-live' -
+    prionic = !sh -c 'git pr $1 && npm install && git ionic-run-android' -
+    prionic-live = !sh -c 'git pr $1 && npm install && git ionic-run-android-live' -
+    ionic-run-android = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot' -
+    ionic-run-android-live = !sh -c 'npm install && ionic cordova run android --minifycss --optimizejs --aot --livereload' -
+    lb = !sh -c 'lerna bootstrap'
+    cup = !sh -c 'rm -rf vendor && composer install --ignore-platform-reqs && ~/bin/jspm install && ~/bin/jspm prod'
+    tg = !sh -c '~/bin/gh-tag-too-low $1 && git tag $1 && git push origin $1' -
+    tgl = tag --list
+    tgi = !sh -c 'git tg $(increment-version ${1:--n})' -
+    tgip = !sh -c 'git tg $(increment-version ${1:--n}) && git ps' -
+    tgps = !sh -c 'git tg $1 && git ps' -
+    fix-commits = !sh -c "git filter-branch -f --commit-filter 'export GIT_COMMITTER_NAME=\"$GIT_AUTHOR_NAME\"; export GIT_COMMITTER_EMAIL=\"$GIT_AUTHOR_EMAIL\"; export GIT_COMMITTER_DATE=\"$GIT_AUTHOR_DATE\"; git commit-tree \"$@\"' $1~1..HEAD" -
 
-	dwc = !sh -c 'yarn test:coverage && yarn build:ci'
+    dwc = !sh -c '~/bin/jspm test:coverage && ~/bin/jspm build:ci'
 
-        diff-stash = stash show -p stash@{0}
-        diff-stash1 = stash show -p stash@{1}
-        diff-stash2 = stash show -p stash@{2}
-        diff-stash3 = stash show -p stash@{3}
-        diff-staged = diff --cached
-        diff-prev = diff HEAD^
-        pull-theirs = !git fetch && git reset --hard HEAD
-        commit-empty = commit --allow-empty
-        initial-commit = commit -m 'chore: initial commit (empty)' --allow-empty
-        init = !sh -c 'git init && git initial-commit' -
-        ec = !sh -c 'subl ~/.gitconfig 2>/dev/null || vi ~/.gitconfig' -
+    diff-stash = stash show -p stash@{0}
+    diff-stash1 = stash show -p stash@{1}
+    diff-stash2 = stash show -p stash@{2}
+    diff-stash3 = stash show -p stash@{3}
+    diff-staged = diff --cached
+    diff-prev = diff HEAD^
+    pull-theirs = !git fetch && git reset --hard HEAD
+    commit-empty = commit --allow-empty
+    initial-commit = commit -m 'chore: initial commit (empty)' --allow-empty
+    init = !sh -c 'git init && git initial-commit' -
+    ec = !sh -c 'code ~/.gitconfig 2>/dev/null || vi ~/.gitconfig' -
 
-	m = !sh -c 'git co $1 && git pl && git co $2 && git merge $1' -
-	# md = !sh -c 'git fa && git merge origin/develop' -
-        mm = "!sh -c 'git fa && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git merge origin/master; else git merge origin/main; fi'" -
-        md = "!sh -c 'git fa && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git merge origin/develop; else git mm; fi'" -
-        refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
-        nuke = reset --hard HEAD
+    m = !sh -c 'BRANCH=$(git rev-parse --abbrev-ref HEAD) && git co $1 && git pl && git co $BRANCH && git merge $1' -
+    # md = !sh -c 'git fa && git merge origin/develop' -
+    mm = "!sh -c 'git fa && HAS_MASTER=$(git branch -l | egrep -c \"\\*?\\smaster$\"); if [ \"$HAS_MASTER\" -eq \"1\" ]; then git merge origin/master; else git merge origin/main; fi'" -
+    md = "!sh -c 'git fa && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git merge origin/develop; else git mm; fi'" -
+    refresh-upstream = !sh -c 'git co master && git fetch upstream && git rebase upstream/master'
+    nuke = reset --hard HEAD
 [init]
 	defaultBranch = main
