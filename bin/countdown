@@ -1,0 +1,10 @@
+#!/bin/bash
+
+secs=$1;
+while [ $secs -gt 0 ]; do
+   echo -en "\r\033[K$secs"
+   sleep 1
+   secs=$(($secs - 1));
+done
+
+echo -en "\r\033[K"
