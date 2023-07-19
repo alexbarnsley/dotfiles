@@ -1,0 +1,9 @@
+#!/bin/bash
+
+COMMAND="yarn"
+if [[ ! -f "yarn.lock" ]]; then 
+	COMMAND="pnpm"; 
+fi
+
+echo "$COMMAND ${@:1}";
+eval "$COMMAND ${@:1}";
