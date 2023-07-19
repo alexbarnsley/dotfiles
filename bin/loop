@@ -3,7 +3,7 @@
 shopt -s expand_aliases
 source ~/.bash_aliases
 
-RUNS=10
+RUNS=0
 
 if [[ "$1" =~ ^[0-9]+$ ]] ; then
 	RUNS=$1
@@ -11,7 +11,14 @@ if [[ "$1" =~ ^[0-9]+$ ]] ; then
 	shift
 fi
 
-for i in $(seq 1 "$RUNS"); do 
-	echo "Run $i of $RUNS";
-	eval "$(printf ' %q' "$@")" || exit;
-done
+if [[ "$RUNS" = "0" ]]; then
+	while :
+	do
+                eval "$(printf ' %q' "$@")" || exit;
+        done
+else
+	for i in $(seq 1 "$RUNS"); do 
+		echo "Run $i of $RUNS";
+		eval "$(printf ' %q' "$@")" || exit;
+	done
+fi
