@@ -96,6 +96,9 @@ source $ZSH/oh-my-zsh.sh
 #JAVA_HOME=('/Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/')
 #export JAVA_HOME
 
+COMPOSER_PATH=("$HOME/.config/composer/vendor/bin")
+export COMPOSER_PATH
+
 GOPATH=("$HOME/projects/go")
 export GOPATH
 GOROOT=('/usr/local/opt/go@1.13/libexec')
@@ -110,6 +113,14 @@ export ANDROID_AVD_HOME
 JAVA_HOME=('/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home')
 export JAVA_HOME
 
+CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))
+export CUDA_HOME
+CUDA_HOME=('/usr/local/cuda/')
+export CUDA_HOME
+LD_LIBRARY_PATH+=("$CUDA_HOME/lib64/:/var/nv-tensorrt-local-repo-ubuntu2204-8.6.1-cuda-12.0/")
+export LD_LIBRARY_PATH
+
+path+=("$CUDA_HOME/bin")
 path+=($JAVA_HOME)
 path+=("$HOME/Library/Android/sdk/platform-tools")
 path+=("$HOME/Library/Android/sdk/tools")
@@ -120,6 +131,7 @@ path=("$HOME/.composer/vendor/bin" $path)
 path=("$HOME/bin" $path)
 path=($path "$HOME/bin")
 path=("$JAVA_HOME/bin" $path)
+path+=($COMPOSER_PATH)
 export PATH
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
@@ -139,3 +151,13 @@ source ~/.bash_aliases
 #if [ "$PWD" = "/Users/alexbarnsley" ]; then
 #	gp
 #fi
+
+#xmodmap ~/.Xmodmap
+
+# pnpm
+export PNPM_HOME="/home/alexbarnsley/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
