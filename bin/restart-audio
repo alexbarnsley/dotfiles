@@ -1,0 +1,4 @@
+killall /usr/bin/pipewire-pulse || true
+pipewire-pulse || true
+sudo /etc/init.d/pulseaudio-enable-autospawn restart
+killall /usr/bin/pipewire-pulse
