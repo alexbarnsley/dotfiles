@@ -1,0 +1,70 @@
+#!/bin/bash
+
+increment_version() {
+  local delimiter=.
+  local array=($(echo "$1" | tr $delimiter '\n'))
+  array[$2]=$((array[$2]+1))
+  if [ $2 -lt 2 ]; then array[2]=0; fi
+  if [ $2 -lt 1 ]; then array[1]=0; fi
+  echo $(local IFS=$delimiter ; echo "${array[*]}")
+}
+
+LAST_VERSION=$(git describe --tags --abbrev=0)
+
+MAJOR=false
+MINOR=false
+PATCH=false
+DEBUG=false
+
+while getopts mnpd OPT; do
+  # support long options: https://stackoverflow.com/a/28466267/519360
+  if [ "$OPT" = "-" ]; then   # long option: reformulate OPT and OPTARG
+    OPT="${OPTARG%%=*}"       # extract long option name
+    OPTARG="${OPTARG#$OPT}"   # extract long option argument (may be empty)
+    OPTARG="${OPTARG#=}"      # if long option argument, remove assigning `=`
+  fi
+  case "$OPT" in
+    m | major )    MAJOR=true ;;
+    n | minor )    MINOR=true ;;
+    p | patch )    PATCH=true ;;
+    d | debug )    DEBUG=true ;;
+    ? )            exit 2 ;;  # bad short option (error reported via getopts)
+  esac
+done
+shift $((OPTIND-1)) # remove parsed options and args from $@ list
+
+TOO_MANY_FLAGS=false
+if [[ $MAJOR = true && $MINOR = true ]] || [[ $MAJOR = true && $PATCH = true ]] || [[ $MINOR = true && $PATCH = true ]]; then
+	TOO_MANY_FLAGS=true;
+fi
+
+if [ $TOO_MANY_FLAGS = true ]; then
+	if [ $DEBUG = true ]; then
+		echo "Error: Too many flags provided";
+	fi
+
+	exit 2;
+fi
+
+INCREMENTOR=-1
+if [ $MAJOR = true ]; then
+	INCREMENTOR=0
+elif [ $MINOR = true ]; then
+	INCREMENTOR=1;
+elif [ $PATCH = true ]; then
+	INCREMENTOR=2;
+else
+	if [ $DEBUG = true ]; then
+		echo "Error: No flags provided";
+	fi
+
+        exit 2
+fi
+
+NEW_VERSION=$(increment_version "$LAST_VERSION" "$INCREMENTOR")
+
+if [ $DEBUG = true ]; then
+	echo "$LAST_VERSION => $NEW_VERSION";
+else
+	echo "$NEW_VERSION";
+fi

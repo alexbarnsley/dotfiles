@@ -1,0 +1,24 @@
+#!/bin/bash
+
+VERSION_MAJOR=$(echo $1 | awk -F "." '{print $1}');
+VERSION_MINOR=$(echo $1 | awk -F "." '{print $2}');
+VERSION_PATCH=$(echo $1 | awk -F "." '{print $3}');
+
+TAGS=$(git tag --list | awk '{print $0}');
+for TAG in $TAGS; do
+	MAJOR=$(echo $TAG | awk -F "." '{print $1}');
+	MINOR=$(echo $TAG | awk -F "." '{print $2}');
+	PATCH=$(echo $TAG | awk -F "." '{print $3}');
+	if [[ "$MAJOR" -gt "$VERSION_MAJOR" ]]; then
+		echo "Major version is too low."
+		exit 1;
+	elif [[ "$MAJOR" -eq "$VERSION_MAJOR" && "$MINOR" -ge "$VERSION_MINOR" ]]; then
+		echo "Minor version is too low."
+		exit 2;
+	elif [[ "$MAJOR" -eq "$VERSION_MAJOR" && "$MINOR" -eq "$VERSION_MINOR" && "$PATCH" -ge "$VERSION_PATCH" ]]; then
+		echo "Patch version is too low."
+		exit 3;
+	fi
+done;
+
+exit 0;
