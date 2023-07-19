@@ -1,0 +1,7 @@
+FRESH_SCRIPT=$(jq '.scripts.fresh // empty' composer.json)
+
+if [ ! -z "$FRESH_SCRIPT" ]; then
+	composer fresh
+else
+	composer db:dev
+fi
