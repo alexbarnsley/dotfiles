@@ -61,6 +61,8 @@ alias phpv8='valet use php@8.0 --force'
 alias ms='meilisearch --no-analytics=1 --master-key=masterKey'
 alias begin='valet use php@8.0 --force && brew services restart postgres && ms'
 alias clear='printf "\n%.0s" {1..$(tput lines)}'
+alias clear-laravel-logs='$(gp && find . -name "laravel.log" -exec rm {} \;)'
+alias lc='laravelclear'
 
 # function y() {
 # 	COMMAND="yarn"
@@ -73,7 +75,7 @@ alias clear='printf "\n%.0s" {1..$(tput lines)}'
 # }
 
 laravelclear() {
-	php artisan cache:clear && php artisan route:clear && php artisan config:clear && php artisan view:clear
+	php artisan optimize:clear && php artisan view:clear && php artisan cache:clear && php artisan responsecache:clear && php artisan config:cache && pa route:clear && c dumpautoload
 }
 
 expcache() {
