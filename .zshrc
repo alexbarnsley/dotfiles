@@ -104,9 +104,9 @@ export GOPATH
 GOROOT=('/usr/local/opt/go@1.13/libexec')
 export GOROOT
 
-ANDROID_HOME=("$HOME/Library/Android/sdk")
+ANDROID_HOME=("$HOME/Android/Sdk")
 export ANDROID_HOME
-ANDROID_SDK_ROOT=("$HOME/Library/Android/sdk")
+ANDROID_SDK_ROOT=("$HOME/Android/Sdk")
 export ANDROID_SDK_ROOT
 ANDROID_AVD_HOME=("$HOME/.android/avd")
 export ANDROID_AVD_HOME
@@ -115,16 +115,19 @@ export JAVA_HOME
 
 CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))
 export CUDA_HOME
+TENSOR_RT_PATH="/var/local/python/TensorRT-8.6.1.6"
+export TENSOR_RT_PATH
 CUDA_HOME=('/usr/local/cuda/')
 export CUDA_HOME
-LD_LIBRARY_PATH+=("$CUDA_HOME/lib64/:/var/nv-tensorrt-local-repo-ubuntu2204-8.6.1-cuda-12.0/")
+LD_LIBRARY_PATH+=("$CUDA_HOME/lib64/:$TENSOR_RT_PATH/lib")
 export LD_LIBRARY_PATH
 
 path+=("$CUDA_HOME/bin")
 path+=($JAVA_HOME)
-path+=("$HOME/Library/Android/sdk/platform-tools")
-path+=("$HOME/Library/Android/sdk/tools")
-path+=("$HOME/Library/Android/sdk/tools/bin")
+path+=("$ANDROID_HOME/platform-tools")
+path+=("$ANDROID_HOME/tools")
+path+=("$ANDROID_HOME/emulator")
+path+=("$ANDROID_HOME/tools/bin")
 path+=($GOPATH)
 path+=($GOROOT)
 path=("$HOME/.composer/vendor/bin" $path)
