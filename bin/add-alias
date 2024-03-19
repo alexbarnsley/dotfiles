@@ -1,0 +1,14 @@
+#!/bin/bash
+
+ALIAS="$1"
+COMMAND="${*:2}"
+
+ALIAS_EXISTS=$(cat ~/.bash_aliases | fgrep "alias $ALIAS" -c)
+
+if [[ "$ALIAS_EXISTS" -ne "0" ]]; then
+	echo "Alias already exists."
+
+	exit
+fi
+
+echo "alias ${ALIAS}=\"${COMMAND}\"" >> ~/.bash_aliases
