@@ -1,5 +1,11 @@
-DATABASE_NAME="$1"
+#!/bin/bash
 
-sudo -u postgres psql -c "create user $DATABASE_NAME with encrypted password 'password';"
-sudo -u postgres psql -c "create database $DATABASE_NAME;"
-sudo -u postgres psql -c "grant all privileges on database $DATABASE_NAME to $DATABASE_NAME;"
+DATABASE_NAME="$1"
+PORT="5432"
+if [[ ! -z "$2" ]]; then
+	PORT="$2"
+fi
+
+sudo -u postgres psql -p "$PORT" -c "create user $DATABASE_NAME with encrypted password 'password';"
+sudo -u postgres psql -p "$PORT" -c "create database $DATABASE_NAME;"
+sudo -u postgres psql -p "$PORT" -c "grant all privileges on database $DATABASE_NAME to $DATABASE_NAME;"
