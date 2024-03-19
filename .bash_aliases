@@ -5,18 +5,20 @@ alias finder-hide-hidden="defaults write com.apple.finder AppleShowAllFiles -boo
 alias ai="sudo apt install"
 alias l="ls -al"
 alias mkd=". ~/bin/mkdir"
-alias s="subl"
-alias sc="subl ."
-alias scc="subl composer.json"
-alias c="code"
-alias cc="c ."
-alias ccc="c composer.json"
+alias s="subl 2>/dev/null || code"
+alias sc="s ."
+alias scc="s composer.json"
+alias cc="code ."
+alias ccc="code composer.json"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 #alias gh="cd ~" # Go home
+alias pt="./vendor/bin/pest"
+alias ptc="XDEBUG_MODE=coverage ./vendor/bin/pest --coverage --min=100 --coverage-html=.coverage --coverage-clover=coverage.xml tests/"
 alias py="python"
+alias pi="pip install"
 alias gps="cd ~/projects-sync"
 alias gp="cd ~/projects"
 alias gpn="cd /media/alexbarnsley/nvme/projects"
@@ -24,6 +26,7 @@ alias gpa="cd ~/projects/ark"
 alias gpardent="cd ~/projects/ardent"
 alias gpp="cd ~/projects/payvo"
 alias c="php -d memory_limit=-1 /usr/local/bin/composer"
+alias ca="./vendor/bin/phpstan clear && c analyse"
 alias ci="c install"
 alias cu="c update"
 alias cr="c require"
@@ -63,6 +66,9 @@ alias begin='valet use php@8.0 --force && brew services restart postgres && ms'
 alias clear='printf "\n%.0s" {1..$(tput lines)}'
 alias clear-laravel-logs='$(gp && find . -name "laravel.log" -exec rm {} \;)'
 alias lc='laravelclear'
+
+alias arkscan='cd /home/alexbarnsley/projects/work/ardent/arkscan'
+alias arkio='cd /home/alexbarnsley/projects/work/ardent/ark.io'
 
 # function y() {
 # 	COMMAND="yarn"
