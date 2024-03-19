@@ -19,7 +19,7 @@
     stsp = stash -p
     ci = commit
     co = "!sh -c 'git fetch --all >/dev/null && OUTPUT=$(git checkout $1) && echo \"$OUTPUT\" && BEHIND=$(echo $OUTPUT | fgrep \"branch is behind\" -c); if [ \"$BEHIND\" -eq \"1\" ]; then read -p \"Pull? [Y/n]: \" PULL; if [ \"$PULL\" != \"n\" ]; then git pull; fi; fi'" -
-    cou = "!sh -c 'git co $1 && composer install --ignore-platform-reqs && if [ -f package.json ]; then ~/bin/jspm install && if [ -f vite.config.ts ]; then ~/bin/jspm build; fi; fi'" -
+    cou = "!sh -c 'git co $1 && if [ -f composer.json ]; then composer install --ignore-platform-reqs; fi && if [ -f package.json ]; then ~/bin/jspm install && if [ -f vite.config.ts ]; then ~/bin/jspm build; fi; fi'" -
     cob = checkout -b
     cop = !sh -c 'git checkout $1 && git pull'
     cod = "!sh -c 'git fetch --all >/dev/null && HAS_DEVELOP=$(git branch -l | egrep -c \"\\*?\\sdevelop$\"); if [ \"$HAS_DEVELOP\" -eq \"1\" ]; then git checkout develop && git pull; else git comnp; fi; composer install --ignore-platform-reqs && ~/bin/jspm install'" -
@@ -43,6 +43,8 @@
     ct = c -m "test"
     ctp = !sh -c 'git c -m "test" && git ps' -
     cwp = !sh -c 'git cw && git ps' -
+    cs = cm 'chore: stanley'
+    cps = !sh -c 'git cs && git ps' -
     cp = cm 'chore: update public'
     cpp = !sh -c 'git cp && git ps' -
     cui = cm 'chore: update foundation dependency'
